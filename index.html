@@ -32,8 +32,35 @@
   </head>
   <body>
     <img src="https://raw.githubusercontent.com/t-e-l/artwork/master/github_banner.png" alt="logo" class="center"/> 
-    <h2><a href="">Download</a></h2>
-    <h2><a href="https://github.com/t-e-l/termux-styling/releases/download/untagged-5a77b1422839e30bb3ea/TEL.Styling.apk">TEL:Styling</a></h2>
-    <h2><a href="">TEL:API</a></h2>
+    <h2><a id="tel" href="">Download</a></h2>
+    <h2><a id="styling" href="">TEL:Styling</a></h2>
+    <h2><a id="api" href="">TEL:API</a></h2>
+    <h2><a id="boot" href="">TEL:Boot</a></h2>
+    <h2><a id="float" href="">TEL:Float</a></h2>
+    <h2><a id="tasker" href="">TEL:Tasker</a></h2>
+    <h2><a id="widget" href="">TEL:Widget</a></h2>
+    <script>
+    function parseUrl(repo){
+      var xmlhttp = new XMLHttpRequest();
+      var url = "https://api.github.com/repos/t-e-l/termux-"+repo+"/releases/latest"
+      if(repo === "tel"){
+        url = "https://api.github.com/repos/t-e-l/tel/releases/latest"
+      }
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              var myArr = JSON.parse(this.responseText);
+              if(myArr["assets"].length > 0){
+                document.getElementById(repo).href=myArr["assets"][0]["browser_download_url"];
+              }
+          }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
+    var repos = ["tel","styling","api","boot","float","tasker","widget"];
+    for(let r of repos){
+      parseUrl(r);
+    }  
+    </script>
 </body>
 </html>
